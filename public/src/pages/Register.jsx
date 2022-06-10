@@ -1,15 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 
+const initialState = {
+  username: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
 const Register = () => {
+  const [values, setValues] = useState(initialState);
+
   const handleSubmit = (e) => {
     e.preventDefault(); // prevents reload of page
     alert("form");
   };
 
-  const handleChange = (e) => {};
+  const handleValidation = () => {
+    const { username, email, password, confirmPassword } = values;
+
+    if (password !== confirmPassword) {
+    }
+  };
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   return (
     <>
