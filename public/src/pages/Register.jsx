@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
+
 import "react-toastify/dist/ReactToastify.css";
+import { registerRoute } from "../utils/APIRoutes";
 
 const Register = () => {
   const initialState = {
@@ -27,9 +30,17 @@ const Register = () => {
 
   const [values, setValues] = useState(initialState);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // prevents reload of page
-    handleValidation();
+    if (handleValidation()) {
+      const { username, email, password, confirmPassword } = values;
+
+      const { data } = await axios.post(registerRoute, {
+        username,
+        email,
+        password,
+      });
+    }
   };
 
   const handleValidation = () => {
