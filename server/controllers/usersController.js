@@ -1,7 +1,7 @@
 const User = require("../model/userModel");
 const bcrypt = require("bcrypt");
 
-module.exports.register = async (req, res) => {
+module.exports.register = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
     const usernameCheck = await User.findOne({ username });
@@ -24,10 +24,11 @@ module.exports.register = async (req, res) => {
     return res.json({ status: true, user });
   } catch (err) {
     console.log(err);
+    next(err);
   }
 };
 
-module.exports.login = async (req, res) => {
+module.exports.login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -44,5 +45,25 @@ module.exports.login = async (req, res) => {
     return res.json({ status: true, user });
   } catch (err) {
     console.log(err);
+    next(err);
+  }
+};
+
+module.exports.setAvatar = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const avatarImage = req.body.image;
+    const userData = await User.findByIdAndUpdate(userId, {
+      isAvatarImageSet: true,
+      avatarImage,
+    });
+
+    return res.json({
+      isSet: userData.isAvatarImageSet,
+      image: userData.avatarImage,
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
 };
