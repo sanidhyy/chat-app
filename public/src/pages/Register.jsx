@@ -32,6 +32,12 @@ const Register = () => {
 
   const [values, setValues] = useState(initialState);
 
+  useEffect(() => {
+    if (localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)) {
+      navigate("/");
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevents reload of page
     if (handleValidation()) {
