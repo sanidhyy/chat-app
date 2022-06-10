@@ -2,27 +2,59 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
-
-const initialState = {
-  username: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-};
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
+  const initialState = {
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
+
+  const showToast = (msg) => {
+    const toastOptions = {
+      position: "bottom-right",
+      autoClose: 8000,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "dark",
+    };
+
+    return toast.error(msg, toastOptions);
+  };
+
   const [values, setValues] = useState(initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // prevents reload of page
-    alert("form");
+    handleValidation();
   };
 
   const handleValidation = () => {
     const { username, email, password, confirmPassword } = values;
 
-    if (password !== confirmPassword) {
+    const validateEmail = (email) => {
+      const regex =
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      return !email || regex.test(email) === false;
+    };
+
+    if (username.length < 3) {
+      showToast("Username should be greater than 3 characters.");
+      return false;
+    } else if (validateEmail(email)) {
+      showToast("Invalid Email!");
+      return false;
+    } else if (password.length < 8) {
+      showToast("Password should be equal or greater than 8 characters");
+      return false;
+    } else if (password !== confirmPassword) {
+      showToast("Password and confirm password should be same.");
+      return false;
     }
+    return true;
   };
 
   const handleChange = (e) => {
@@ -49,7 +81,7 @@ const Register = () => {
             onChange={(e) => handleChange(e)}
           />
           <input
-            type="email"
+            type="text"
             placeholder="E-mail"
             name="email"
             onChange={(e) => handleChange(e)}
@@ -72,6 +104,8 @@ const Register = () => {
           </span>
         </form>
       </FormContainer>
+
+      <ToastContainer />
     </>
   );
 };
