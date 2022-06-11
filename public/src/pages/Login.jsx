@@ -31,9 +31,8 @@ const Login = () => {
   const [values, setValues] = useState(initialState);
 
   useEffect(() => {
-    if (localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)) {
-      navigate("/");
-    }
+    if (localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER))
+      return navigate("/");
   }, []);
 
   const handleSubmit = async (e) => {
@@ -53,7 +52,7 @@ const Login = () => {
           process.env.REACT_APP_CHAT_APP_USER,
           JSON.stringify(data.user)
         );
-        navigate("/");
+        return navigate("/");
       }
     }
   };

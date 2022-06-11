@@ -28,14 +28,12 @@ const SetAvatar = () => {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)) {
-      navigate("/login");
-    } else {
-      const user = JSON.parse(
-        localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)
-      );
-      if (user.isAvatarImageSet) navigate("/");
-    }
+    if (!localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER))
+      return navigate("/login");
+    const user = JSON.parse(
+      localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)
+    );
+    if (user.isAvatarImageSet) return navigate("/");
   }, []);
 
   const setProfilePicture = async () => {

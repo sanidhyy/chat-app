@@ -9,18 +9,17 @@ const Chat = () => {
   const navigate = useNavigate();
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentChat, setCurrentChat] = useState(undefined);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      if (!localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)) {
-        navigate("/login");
-      } else {
-        setCurrentUser(
-          await JSON.parse(
-            localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)
-          )
-        );
-      }
+      if (!localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER))
+        return navigate("/login");
+      setCurrentUser(
+        await JSON.parse(
+          localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)
+        )
+      );
     };
 
     fetchCurrentUser();
@@ -38,10 +37,18 @@ const Chat = () => {
     fetchAllUsers();
   }, [currentUser]);
 
+  const handleChatChange = (chat) => {
+    setCurrentChat(chat);
+  };
+
   return (
     <Container>
       <div className="container">
-        <Contacts contacts={contacts} currentUser={currentUser} />
+        <Contacts
+          contacts={contacts}
+          currentUser={currentUser}
+          changeChat={handleChatChange}
+        />
       </div>
     </Container>
   );
