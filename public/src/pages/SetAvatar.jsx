@@ -36,7 +36,7 @@ const SetAvatar = () => {
       );
       if (user.isAvatarImageSet) navigate("/");
     }
-  });
+  }, []);
 
   const setProfilePicture = async () => {
     if (selectedAvatar === undefined) {
