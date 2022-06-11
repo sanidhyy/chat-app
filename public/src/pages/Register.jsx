@@ -63,7 +63,7 @@ const Register = () => {
   const handleValidation = () => {
     const { username, email, password, confirmPassword } = values;
 
-    const validateEmail = (email) => {
+    const isInvalidEmail = (email) => {
       const regex = new RegExp( // eslint-disable-next-line
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
       );
@@ -73,16 +73,23 @@ const Register = () => {
     if (username.length < 3) {
       showToast("Username should be greater than 3 characters.");
       return false;
-    } else if (validateEmail(email)) {
+    }
+
+    if (isInvalidEmail(email)) {
       showToast("Invalid Email!");
       return false;
-    } else if (password.length < 8) {
+    }
+
+    if (password.length < 8) {
       showToast("Password should be equal or greater than 8 characters");
       return false;
-    } else if (password !== confirmPassword) {
+    }
+
+    if (password !== confirmPassword) {
       showToast("Password and confirm password should be same.");
       return false;
     }
+
     return true;
   };
 
@@ -105,7 +112,7 @@ const Register = () => {
           </div>
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Your Name"
             name="username"
             onChange={(e) => handleChange(e)}
           />

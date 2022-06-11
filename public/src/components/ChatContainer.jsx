@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Logout from "./Logout";
+import DefaultAvatar from "../assets/user-default.png";
 
 const ChatContainer = ({ currentChat }) => {
   return (
@@ -9,7 +10,11 @@ const ChatContainer = ({ currentChat }) => {
         <div className="user-details">
           <div className="avatar">
             <img
-              src={`data:image/svg+xml;base64,${currentChat?.avatarImage}`}
+              src={`${
+                currentChat?.isAvatarImageSet
+                  ? `data:image/svg+xml;base64,${currentChat?.avatarImage}`
+                  : DefaultAvatar
+              }`}
               alt={`${currentChat?.username}'s Avatar`}
             />
           </div>

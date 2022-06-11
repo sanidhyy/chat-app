@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
+import DefaultAvatar from "../assets/user-default.png";
 
 const Contacts = ({ contacts, currentUser, changeChat }) => {
   const [currentUserName, setCurrentUserName] = useState(undefined);
@@ -37,7 +38,11 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
                 >
                   <div className="avatar">
                     <img
-                      src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+                      src={`${
+                        contact?.isAvatarImageSet
+                          ? `data:image/svg+xml;base64,${contact?.avatarImage}`
+                          : DefaultAvatar
+                      }`}
                       alt={`Avatar ${i + 1}`}
                     />
                   </div>

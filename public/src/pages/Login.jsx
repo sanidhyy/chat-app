@@ -60,14 +60,14 @@ const Login = () => {
   const handleValidation = () => {
     const { email, password } = values;
 
-    const validateEmail = (email) => {
+    const isInvalidEmail = (email) => {
       const regex = new RegExp( // eslint-disable-next-line
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
       );
       return !email || regex.test(email) === false;
     };
 
-    if (validateEmail(email) || password.length < 3) {
+    if (isInvalidEmail(email) || password.length < 3) {
       showToast("E-mail and Password are required");
       return false;
     }
