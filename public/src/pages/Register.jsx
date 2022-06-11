@@ -63,6 +63,10 @@ const Register = () => {
   const handleValidation = () => {
     const { username, email, password, confirmPassword } = values;
 
+    const isEmptyOrSpaces = (str) => {
+      return /^\s*$/.test(str);
+    };
+
     const isInvalidEmail = (email) => {
       const regex = new RegExp( // eslint-disable-next-line
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -70,18 +74,23 @@ const Register = () => {
       return !email || regex.test(email) === false;
     };
 
-    if (username.length < 3) {
+    if (isEmptyOrSpaces(username)) {
       showToast("Username should be greater than 3 characters.");
       return false;
     }
 
     if (isInvalidEmail(email)) {
-      showToast("Invalid Email!");
+      showToast("Invalid Email.");
+      return false;
+    }
+
+    if (/\s/.test(password)) {
+      showToast("Password should not contain spaces.");
       return false;
     }
 
     if (password.length < 8) {
-      showToast("Password should be equal or greater than 8 characters");
+      showToast("Password should be equal or greater than 8 characters.");
       return false;
     }
 

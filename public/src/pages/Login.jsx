@@ -67,8 +67,8 @@ const Login = () => {
       return !email || regex.test(email) === false;
     };
 
-    if (isInvalidEmail(email) || password.length < 3) {
-      showToast("E-mail and Password are required");
+    if (isInvalidEmail(email) || password.length < 3 || /\s/.test(password)) {
+      showToast("E-mail and Password are required.");
       return false;
     }
     return true;

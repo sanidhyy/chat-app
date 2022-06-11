@@ -21,9 +21,9 @@ const ChatInput = ({ handleSendMsg }) => {
   const sendChat = (e) => {
     e.preventDefault();
 
-    function isEmptyOrSpaces(str) {
+    const isEmptyOrSpaces = (str) => {
       return /^\s*$/.test(str);
-    }
+    };
 
     if (!isEmptyOrSpaces(message)) {
       handleSendMsg(message);
