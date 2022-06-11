@@ -27,6 +27,17 @@ const SetAvatar = () => {
     return toast.error(msg, toastOptions);
   };
 
+  useEffect(() => {
+    if (!localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)) {
+      navigate("/login");
+    } else {
+      const user = JSON.parse(
+        localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)
+      );
+      if (user.isAvatarImageSet) navigate("/");
+    }
+  });
+
   const setProfilePicture = async () => {
     if (selectedAvatar === undefined) {
       showToast("Please select an avatar");
@@ -47,6 +58,7 @@ const SetAvatar = () => {
         );
         navigate("/");
       } else {
+        console.log(data);
         showToast("Error setting avatar. Please try again");
       }
     }

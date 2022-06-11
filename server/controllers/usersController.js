@@ -59,8 +59,8 @@ module.exports.setAvatar = async (req, res, next) => {
     });
 
     return res.json({
-      isSet: userData.isAvatarImageSet,
-      image: userData.avatarImage,
+      isSet: userData ? true : false,
+      image: userData ? avatarImage : "",
     });
   } catch (err) {
     console.log(err);
