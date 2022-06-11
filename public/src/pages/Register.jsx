@@ -35,7 +35,7 @@ const Register = () => {
   useEffect(() => {
     if (localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER))
       return navigate("/");
-  }, []);
+  }, []); // eslint-disable-line
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevents reload of page
@@ -64,8 +64,9 @@ const Register = () => {
     const { username, email, password, confirmPassword } = values;
 
     const validateEmail = (email) => {
-      const regex =
-        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      const regex = new RegExp( // eslint-disable-next-line
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+      );
       return !email || regex.test(email) === false;
     };
 

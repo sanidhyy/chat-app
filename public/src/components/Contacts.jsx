@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 
-const Contacts = ({ contacts, currentUser }) => {
+const Contacts = ({ contacts, currentUser, changeChat }) => {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
@@ -13,7 +13,10 @@ const Contacts = ({ contacts, currentUser }) => {
       setCurrentUserName(currentUser.username);
     }
   }, [currentUser]);
-  const changeCurrentChat = (index, contact) => {};
+  const changeCurrentChat = (index, contact) => {
+    setCurrentSelected(index);
+    changeChat(contact);
+  };
   return (
     <>
       {currentUserImage && currentUserName && (
@@ -30,28 +33,7 @@ const Contacts = ({ contacts, currentUser }) => {
                     i === currentSelected ? "selected" : ""
                   }`}
                   key={i}
-                >
-                  <div className="avatar">
-                    <img
-                      src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-                      alt={`Avatar ${i + 1}`}
-                    />
-                  </div>
-
-                  <div className="username">
-                    <h3>{contact.username}</h3>
-                  </div>
-                </div>
-              );
-            })}
-
-            {contacts.map((contact, i) => {
-              return (
-                <div
-                  className={`contact ${
-                    i === currentSelected ? "selected" : ""
-                  }`}
-                  key={i}
+                  onClick={() => changeCurrentChat(i, contact)}
                 >
                   <div className="avatar">
                     <img

@@ -33,7 +33,7 @@ const Login = () => {
   useEffect(() => {
     if (localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER))
       return navigate("/");
-  }, []);
+  }, []); // eslint-disable-line
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevents reload of page

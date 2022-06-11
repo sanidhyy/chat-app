@@ -34,7 +34,7 @@ const SetAvatar = () => {
       localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)
     );
     if (user.isAvatarImageSet) return navigate("/");
-  }, []);
+  }, []); // eslint-disable-line
 
   const setProfilePicture = async () => {
     if (selectedAvatar === undefined) {

@@ -23,7 +23,7 @@ const Chat = () => {
     };
 
     fetchCurrentUser();
-  }, []);
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     const fetchAllUsers = async () => {
@@ -35,7 +35,7 @@ const Chat = () => {
     };
 
     fetchAllUsers();
-  }, [currentUser]);
+  }, [currentUser]); // eslint-disable-line
 
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
