@@ -5,15 +5,34 @@ import { IoMdSend } from "react-icons/io";
 import { BsEmojiSmileFill } from "react-icons/bs";
 
 const ChatInput = () => {
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleEmojiPickerHideShow = () => {
+    setShowEmojiPicker(!showEmojiPicker);
+  };
+
+  const handleEmojiClick = (e, emoji) => {
+    let msg = message;
+    msg += emoji.emoji;
+    setMessage(msg);
+  };
+
   return (
     <Container>
       <div className="button-container">
         <div className="emoji">
-          <BsEmojiSmileFill />
+          <BsEmojiSmileFill onClick={handleEmojiPickerHideShow} />
+          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div>
       </div>
       <form className="input-container">
-        <input type="text" placeholder="Type your message here..." />
+        <input
+          type="text"
+          placeholder="Type your message here..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
         <button className="submit">
           <IoMdSend />
         </button>
@@ -42,6 +61,38 @@ const Container = styled.div`
         font-size: 1.5rem;
         color: rgba(255, 255, 0, 0.784);
         cursor: pointer;
+      }
+
+      .emoji-picker-react {
+        position: absolute;
+        top: -350px;
+        background-color: #080420;
+        box-shadow: 0 5px 10px #9a86f3;
+        border-color: #9a86f3;
+
+        .emoji-scroll-wrapper::-webkit-scrollbar {
+          background-color: #080420;
+          width: 5px;
+
+          &-thumb {
+            background-color: #9186f3;
+          }
+        }
+
+        .emoji-categories {
+          button {
+            filter: contrast(0);
+          }
+        }
+
+        .emoji-search {
+          background-color: transparent;
+          border-color: #9186f3;
+        }
+
+        .emoji-group::before {
+          background-color: #080420;
+        }
       }
     }
   }
