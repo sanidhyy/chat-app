@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const initialState = {
-    username: "",
+    email: "",
     password: "",
   };
 
@@ -38,10 +38,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevents reload of page
     if (handleValidation()) {
-      const { username, password } = values;
+      const { email, password } = values;
 
       const { data } = await axios.post(loginRoute, {
-        username,
+        email,
         password,
       });
 
@@ -58,10 +58,17 @@ const Login = () => {
   };
 
   const handleValidation = () => {
-    const { username, password } = values;
+    const { email, password } = values;
 
-    if (username.length < 3 || password.length < 3) {
-      showToast("Username and Password are required");
+    const validateEmail = (email) => {
+      const regex = new RegExp( // eslint-disable-next-line
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+      );
+      return !email || regex.test(email) === false;
+    };
+
+    if (validateEmail(email) || password.length < 3) {
+      showToast("E-mail and Password are required");
       return false;
     }
     return true;
@@ -86,8 +93,8 @@ const Login = () => {
           </div>
           <input
             type="text"
-            placeholder="Username"
-            name="username"
+            placeholder="E-mail"
+            name="email"
             onChange={(e) => handleChange(e)}
           />
           <input
