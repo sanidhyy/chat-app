@@ -90,6 +90,8 @@ const Container = styled.div`
     background-color: rgba(0, 0, 0, 0.463);
     display: grid;
     grid-template-columns: 25% 75%;
+    border-radius: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
     @media screen and (min-width: 720px) and (max-width: 1080px) {
       grid-template-columns: 35% 65%;

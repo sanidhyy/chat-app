@@ -61,6 +61,7 @@ const Container = styled.div`
   background-color: #080220;
   padding: 0 2rem;
   padding-bottom: 0.3rem;
+  border-bottom-right-radius: 2rem;
 
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     padding: 0 1rem;
@@ -129,7 +130,7 @@ const Container = styled.div`
       color: #fff;
       border: none;
       padding-left: 1rem;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
 
       &::selection {
         background-color: #9a86f3;
