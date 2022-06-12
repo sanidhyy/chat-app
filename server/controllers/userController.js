@@ -19,9 +19,9 @@ module.exports.register = async (req, res, next) => {
 
     delete user.password;
     return res.json({ status: true, user });
-  } catch (err) {
-    console.log(err);
-    next(err);
+  } catch (ex) {
+    console.log(ex);
+    next(ex);
   }
 };
 
@@ -40,9 +40,9 @@ module.exports.login = async (req, res, next) => {
     delete user.password;
 
     return res.json({ status: true, user });
-  } catch (err) {
-    console.log(err);
-    next(err);
+  } catch (ex) {
+    console.log(ex);
+    next(ex);
   }
 };
 
@@ -59,9 +59,9 @@ module.exports.setAvatar = async (req, res, next) => {
       isSet: userData ? true : false,
       image: userData ? avatarImage : "",
     });
-  } catch (err) {
-    console.log(err);
-    next(err);
+  } catch (ex) {
+    console.log(ex);
+    next(ex);
   }
 };
 
@@ -76,8 +76,8 @@ module.exports.getAllUsers = async (req, res, next) => {
     ]);
 
     return res.json(users);
-  } catch (err) {
-    console.log(err);
-    next(err);
+  } catch (ex) {
+    console.log(ex);
+    next(ex);
   }
 };
