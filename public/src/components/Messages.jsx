@@ -1,10 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 
-const Messages = () => {
+const Messages = ({ messages }) => {
   return (
     <Container>
-      <h1>Messages</h1>
+      {messages?.map((message) => {
+        return (
+          <div>
+            <div
+              className={`message ${message.fromSelf ? "sended" : "recieved"}`}
+            >
+              <div className="content">
+                <p>{message.message}</p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </Container>
   );
 };

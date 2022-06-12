@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import Logout from "./Logout";
 import DefaultAvatar from "../assets/user-default.png";
 import ChatInput from "./ChatInput";
 import Messages from "./Messages";
-import { sendMessageRoute } from "../utils/APIRoutes";
+import { getAllMessagesRoute, sendMessageRoute } from "../utils/APIRoutes";
 
 const ChatContainer = ({ currentChat, currentUser }) => {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    const fetchAllMessages = async () => {
+      const response = await axios.post(getAllMessagesRoute, {
+        from: currentUser._id,
+        to: currentChat._id,
+      });
+
+      setMessages(response?.data);
+    };
+
+    fetchAllMessages();
+  }, [currentChat]); // eslint-disable-line
+
   const handleSendMsg = async (msg) => {
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
@@ -36,7 +51,7 @@ const ChatContainer = ({ currentChat, currentUser }) => {
         </div>
         <Logout />
       </div>
-      <Messages />
+      <Messages messages={messages} />
       <ChatInput handleSendMsg={handleSendMsg} />
     </Container>
   );
