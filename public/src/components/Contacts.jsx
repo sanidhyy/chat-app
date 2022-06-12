@@ -57,16 +57,14 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
 
           <div className="current-user">
             <div className="avatar">
-              <div className="avatar">
-                <img
-                  src={`data:image/svg+xml;base64,${currentUserImage}`}
-                  alt={`${currentUserName}'s Avatar`}
-                />
-              </div>
+              <img
+                src={`data:image/svg+xml;base64,${currentUserImage}`}
+                alt={`${currentUserName}'s Avatar`}
+              />
+            </div>
 
-              <div className="username">
-                <h2>{currentUserName}</h2>
-              </div>
+            <div className="username">
+              <h2>{currentUserName}</h2>
             </div>
           </div>
         </Container>
