@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 
-const Messages = ({ messages }) => {
+const Messages = ({ messages, scrollRef }) => {
   return (
     <Container>
       {messages?.map((message) => {
         return (
-          <div>
+          <div ref={scrollRef} key={uuidv4()}>
             <div
               className={`message ${message.fromSelf ? "sended" : "recieved"}`}
             >
@@ -27,6 +28,16 @@ const Container = styled.div`
   flex-direction: column;
   gap: 1rem;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 0.2rem;
+
+    &-thumb {
+      background-color: rgba(255, 255, 255, 0.224);
+      width: 0.1rem;
+      border-radius: 1rem;
+    }
+  }
 
   .message {
     display: flex;

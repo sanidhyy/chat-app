@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
     const sendUserSocket = onlineUsers.get(data.to);
 
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+      socket.to(sendUserSocket).emit("msg-recieve", data.message);
     }
   });
 });
