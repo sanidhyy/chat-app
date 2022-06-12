@@ -31,7 +31,7 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
         setArrivalMessage({ fromSelf: false, message: msg });
       });
     }
-  }, []);
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
