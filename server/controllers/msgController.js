@@ -1,10 +1,27 @@
 const msgModel = require("../model/msgModel");
+const crypto = require("crypto");
 
 module.exports.addMessage = async (req, res, next) => {
+  const encrypt = (msg) => {
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv(
+      process.env.MESSAGE_ALGORITHM,
+      process.env.MESSAGE_SECRET_KEY,
+      iv
+    );
+    const encrypted = Buffer.concat([cipher.update(msg), cipher.final()]);
+
+    return {
+      iv: iv.toString("hex"),
+      content: encrypted.toString("hex"),
+    };
+  };
+
   try {
     const { from, to, message } = req.body;
+    const encryptedMsg = JSON.stringify(encrypt(message));
     const data = await msgModel.create({
-      message: { text: message },
+      message: { text: encryptedMsg },
       users: [from, to],
       sender: from,
     });
@@ -19,6 +36,20 @@ module.exports.addMessage = async (req, res, next) => {
 };
 
 module.exports.getAllMessages = async (req, res, next) => {
+  const decrypt = (hash) => {
+    const decipher = crypto.createDecipheriv(
+      process.env.MESSAGE_ALGORITHM,
+      process.env.MESSAGE_SECRET_KEY,
+      Buffer.from(hash.iv, "hex")
+    );
+    const decrypted = Buffer.concat([
+      decipher.update(Buffer.from(hash.content, "hex")),
+      decipher.final(),
+    ]);
+
+    return decrypted.toString();
+  };
+
   try {
     const { from, to } = req.body;
     const messages = await msgModel
@@ -32,7 +63,7 @@ module.exports.getAllMessages = async (req, res, next) => {
     const allMessages = messages?.map((msg) => {
       return {
         fromSelf: msg.sender.toString() === from,
-        message: msg.message.text,
+        message: decrypt(JSON.parse(msg.message.text)),
       };
     });
 
