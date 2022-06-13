@@ -86,6 +86,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    cursor: default;
 
     img {
       height: 2rem;
@@ -149,6 +150,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    cursor: default;
 
     .avatar {
       img {

@@ -112,6 +112,10 @@ const Container = styled.div`
         .emoji-group::before {
           background-color: #080420;
         }
+
+        input {
+          color: #fff;
+        }
       }
     }
   }

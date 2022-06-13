@@ -42,6 +42,7 @@ const Container = styled.div`
   .message {
     display: flex;
     align-items: center;
+    cursor: default;
 
     .content {
       max-width: 40%;
