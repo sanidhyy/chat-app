@@ -22,7 +22,9 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
   }, [currentUser]);
 
   useEffect(() => {
-    const re = RegExp(`.*${search.toLowerCase().split("").join(".*")}.*`);
+    const re = RegExp(
+      `.*${search.toLowerCase().replace(/\s+/g, "").split("").join(".*")}.*`
+    );
     const searchResults = contacts.filter((v) =>
       v.username.toLowerCase().match(re)
     );
