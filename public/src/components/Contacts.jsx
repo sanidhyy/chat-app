@@ -7,6 +7,12 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
+  const [search, setSearch] = useState("");
+  const [filteredContacts, setFilteredContacts] = useState([]);
+
+  const isEmptyOrSpaces = (str) => {
+    return /^\s*$/.test(str);
+  };
 
   useEffect(() => {
     if (currentUser) {
@@ -14,10 +20,46 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
       setCurrentUserName(currentUser.username);
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    const re = RegExp(`.*${search.toLowerCase().split("").join(".*")}.*`);
+    const searchResults = contacts.filter((v) =>
+      v.username.toLowerCase().match(re)
+    );
+
+    setFilteredContacts(searchResults);
+  }, [search]);
+
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
   };
+
+  const showContacts = (contact, key) => {
+    return (
+      <div
+        className={`contact ${key === currentSelected ? "selected" : ""}`}
+        key={key}
+        onClick={() => changeCurrentChat(key, contact)}
+      >
+        <div className="avatar">
+          <img
+            src={`${
+              contact?.isAvatarImageSet
+                ? `data:image/svg+xml;base64,${contact?.avatarImage}`
+                : DefaultAvatar
+            }`}
+            alt={`Avatar ${key + 1}`}
+          />
+        </div>
+
+        <div className="username">
+          <h3>{contact.username}</h3>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       {currentUserImage && currentUserName && (
@@ -27,32 +69,21 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
             <h3>Snappy</h3>
           </div>
           <div className="contacts">
-            {contacts.map((contact, i) => {
-              return (
-                <div
-                  className={`contact ${
-                    i === currentSelected ? "selected" : ""
-                  }`}
-                  key={i}
-                  onClick={() => changeCurrentChat(i, contact)}
-                >
-                  <div className="avatar">
-                    <img
-                      src={`${
-                        contact?.isAvatarImageSet
-                          ? `data:image/svg+xml;base64,${contact?.avatarImage}`
-                          : DefaultAvatar
-                      }`}
-                      alt={`Avatar ${i + 1}`}
-                    />
-                  </div>
-
-                  <div className="username">
-                    <h3>{contact.username}</h3>
-                  </div>
-                </div>
-              );
-            })}
+            <div className="contacts-search">
+              <input
+                type="text"
+                placeholder="Search Contacts"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            {isEmptyOrSpaces(search) ? (
+              contacts.map((contact, i) => showContacts(contact, i))
+            ) : filteredContacts.length > 0 ? (
+              filteredContacts.map((contact, i) => showContacts(contact, i))
+            ) : (
+              <p>No Contacts Found.</p>
+            )}
           </div>
 
           <div className="current-user">
@@ -111,6 +142,36 @@ const Container = styled.div`
         background-color: #ffffff39;
         width: 0.1rem;
         border-radius: 1rem;
+      }
+    }
+
+    p {
+      color: #fff;
+    }
+
+    .contacts-search {
+      width: 90%;
+      height: 2.5rem;
+      border-radius: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background-color: rgba(255, 255, 255, 0.204);
+
+      input {
+        background-color: transparent;
+        color: #fff;
+        border: none;
+        padding-left: 1rem;
+        font-size: 1.2rem;
+
+        &::selection {
+          background-color: #9a86f3;
+        }
+
+        &:focus {
+          outline: none;
+        }
       }
     }
 
