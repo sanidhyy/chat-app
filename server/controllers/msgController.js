@@ -1,6 +1,7 @@
 const msgModel = require("../model/msgModel");
 const crypto = require("crypto");
 
+// Add Messages
 module.exports.addMessage = async (req, res, next) => {
   const encrypt = (msg) => {
     const iv = crypto.randomBytes(16);
@@ -9,6 +10,8 @@ module.exports.addMessage = async (req, res, next) => {
       process.env.MESSAGE_SECRET_KEY,
       iv
     );
+
+    // encrypt msg
     const encrypted = Buffer.concat([cipher.update(msg), cipher.final()]);
 
     return {
@@ -17,6 +20,7 @@ module.exports.addMessage = async (req, res, next) => {
     };
   };
 
+  // Add Message in db
   try {
     const { from, to, message } = req.body;
     const encryptedMsg = JSON.stringify(encrypt(message));
@@ -26,6 +30,7 @@ module.exports.addMessage = async (req, res, next) => {
       sender: from,
     });
 
+    // if msg is not added
     if (!data)
       return res.json({ msg: "Failed to add message to the database." });
     return res.json({ msg: "Message added successfully." });
@@ -35,6 +40,7 @@ module.exports.addMessage = async (req, res, next) => {
   }
 };
 
+// Get All Messages
 module.exports.getAllMessages = async (req, res, next) => {
   const decrypt = (hash) => {
     const decipher = crypto.createDecipheriv(
@@ -42,6 +48,8 @@ module.exports.getAllMessages = async (req, res, next) => {
       process.env.MESSAGE_SECRET_KEY,
       Buffer.from(hash.iv, "hex")
     );
+
+    // decrypt message
     const decrypted = Buffer.concat([
       decipher.update(Buffer.from(hash.content, "hex")),
       decipher.final(),
@@ -50,6 +58,7 @@ module.exports.getAllMessages = async (req, res, next) => {
     return decrypted.toString();
   };
 
+  // fetch messages from db
   try {
     const { from, to } = req.body;
     const messages = await msgModel
@@ -60,6 +69,7 @@ module.exports.getAllMessages = async (req, res, next) => {
       })
       .sort({ updatedAt: 1 });
 
+    // return all messages
     const allMessages = messages?.map((msg) => {
       return {
         fromSelf: msg.sender.toString() === from,

@@ -7,6 +7,7 @@ const {
 
 const router = require("express").Router();
 
+// User Routes
 router.post("/register", register);
 router.post("/login", login);
 router.post("/setavatar/:id", setAvatar);
