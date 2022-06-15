@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import DefaultAvatar from "../assets/user-default.png";
 
+// Contacts
 const Contacts = ({ contacts, currentUser, changeChat }) => {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
@@ -10,10 +11,12 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
   const [search, setSearch] = useState("");
   const [filteredContacts, setFilteredContacts] = useState([]);
 
+  // Check if string is empty or contains whitespaces
   const isEmptyOrSpaces = (str) => {
     return /^\s*$/.test(str);
   };
 
+  // Check current user
   useEffect(() => {
     if (currentUser) {
       setCurrentUserImage(currentUser.avatarImage);
@@ -21,6 +24,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
     }
   }, [currentUser]);
 
+  // Search Contacts Logic
   useEffect(() => {
     const re = RegExp(
       `.*${search.toLowerCase().replace(/\s+/g, "").split("").join(".*")}.*`
@@ -32,11 +36,13 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
     setFilteredContacts(searchResults);
   }, [search]);
 
+  // Change Current Chat
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
   };
 
+  // Show each contacts
   const showContacts = (contact, key) => {
     return (
       <div
@@ -44,6 +50,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
         key={key}
         onClick={() => changeCurrentChat(key, contact)}
       >
+        {/* Avatar Image */}
         <div className="avatar">
           <img
             src={`${
@@ -55,6 +62,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
           />
         </div>
 
+        {/* Avatar Username */}
         <div className="username">
           <h3>{contact.username}</h3>
         </div>
@@ -66,11 +74,13 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
     <>
       {currentUserImage && currentUserName && (
         <Container>
+          {/* Brand Logo and Name */}
           <div className="brand">
             <img src={Logo} alt="Snappy" />
             <h3>Snappy</h3>
           </div>
           <div className="contacts">
+            {/* Contacts Search */}
             <div className="contacts-search">
               <input
                 type="text"
@@ -79,6 +89,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
+            {/* Show Searched Contacts */}
             {isEmptyOrSpaces(search) ? (
               contacts.map((contact, i) => showContacts(contact, i))
             ) : filteredContacts.length > 0 ? (
@@ -88,6 +99,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
             )}
           </div>
 
+          {/* Current User Info */}
           <div className="current-user">
             <div className="avatar">
               <img
@@ -106,6 +118,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
   );
 };
 
+// Styled Components
 const Container = styled.div`
   display: grid;
   grid-template-rows: 10% 75% 15%;

@@ -8,9 +8,11 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "../utils/APIRoutes";
 
+// Register
 const Register = () => {
   const navigate = useNavigate();
 
+  // form initial state
   const initialState = {
     username: "",
     email: "",
@@ -18,6 +20,7 @@ const Register = () => {
     confirmPassword: "",
   };
 
+  // Show toast error message
   const showToast = (msg) => {
     const toastOptions = {
       position: "bottom-right",
@@ -32,11 +35,13 @@ const Register = () => {
 
   const [values, setValues] = useState(initialState);
 
+  // Check if user is already logged in
   useEffect(() => {
     if (localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER))
       return navigate("/");
   }, []); // eslint-disable-line
 
+  // handle form Submit
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevents reload of page
     if (handleValidation()) {
@@ -50,6 +55,7 @@ const Register = () => {
 
       if (!data.status) showToast(data.msg);
 
+      // Registration success
       if (data.status) {
         localStorage.setItem(
           process.env.REACT_APP_CHAT_APP_USER,
@@ -60,13 +66,16 @@ const Register = () => {
     }
   };
 
+  // handle validation
   const handleValidation = () => {
     const { username, email, password, confirmPassword } = values;
 
+    // Check if string is empty or contains whitespaces
     const isEmptyOrSpaces = (str) => {
       return /^\s*$/.test(str);
     };
 
+    // email validation
     const isInvalidEmail = (email) => {
       const regex = new RegExp( // eslint-disable-next-line
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -74,16 +83,19 @@ const Register = () => {
       return !email || regex.test(email) === false;
     };
 
+    // vaidate username
     if (isEmptyOrSpaces(username)) {
       showToast("Username should be greater than 3 characters.");
       return false;
     }
 
+    // validate email
     if (isInvalidEmail(email)) {
       showToast("Invalid Email.");
       return false;
     }
 
+    // validate password
     if (/\s/.test(password)) {
       showToast("Password should not contain spaces.");
       return false;
@@ -94,6 +106,7 @@ const Register = () => {
       return false;
     }
 
+    // validate confirm password
     if (password !== confirmPassword) {
       showToast("Password and confirm password should be same.");
       return false;
@@ -102,6 +115,7 @@ const Register = () => {
     return true;
   };
 
+  // handle form change
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
@@ -119,24 +133,31 @@ const Register = () => {
             <img src={Logo} alt="Snappy" />
             <h1>Snappy</h1>
           </div>
+          {/* Your Name */}
           <input
             type="text"
             placeholder="Your Name"
             name="username"
             onChange={(e) => handleChange(e)}
           />
+
+          {/* E-mail */}
           <input
             type="text"
             placeholder="E-mail"
             name="email"
             onChange={(e) => handleChange(e)}
           />
+
+          {/* Password */}
           <input
             type="password"
             placeholder="Password"
             name="password"
             onChange={(e) => handleChange(e)}
           />
+
+          {/* Confirm Password */}
           <input
             type="password"
             placeholder="Confirm Password"
@@ -155,6 +176,7 @@ const Register = () => {
   );
 };
 
+// Styled Components
 const FormContainer = styled.div`
   height: 100vh;
   width: 100vw;

@@ -8,14 +8,17 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../utils/APIRoutes";
 
+// Login
 const Login = () => {
   const navigate = useNavigate();
 
+  // form initial state
   const initialState = {
     email: "",
     password: "",
   };
 
+  // Show toast error msg
   const showToast = (msg) => {
     const toastOptions = {
       position: "bottom-right",
@@ -30,13 +33,17 @@ const Login = () => {
 
   const [values, setValues] = useState(initialState);
 
+  // Check if user is logged in
   useEffect(() => {
     if (localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER))
       return navigate("/");
   }, []); // eslint-disable-line
 
+  // handle form Submit
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevents reload of page
+
+    // handle Validation
     if (handleValidation()) {
       const { email, password } = values;
 
@@ -47,6 +54,7 @@ const Login = () => {
 
       if (!data.status) showToast(data.msg);
 
+      // Success
       if (data.status) {
         localStorage.setItem(
           process.env.REACT_APP_CHAT_APP_USER,
@@ -57,9 +65,11 @@ const Login = () => {
     }
   };
 
+  // handle form Validation
   const handleValidation = () => {
     const { email, password } = values;
 
+    // Email validation
     const isInvalidEmail = (email) => {
       const regex = new RegExp( // eslint-disable-next-line
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -74,6 +84,7 @@ const Login = () => {
     return true;
   };
 
+  // handle form change
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
@@ -91,18 +102,23 @@ const Login = () => {
             <img src={Logo} alt="Snappy" />
             <h1>Snappy</h1>
           </div>
+
+          {/* E-mail */}
           <input
             type="text"
             placeholder="E-mail"
             name="email"
             onChange={(e) => handleChange(e)}
           />
+
+          {/* Password */}
           <input
             type="password"
             placeholder="Password"
             name="password"
             onChange={(e) => handleChange(e)}
           />
+
           <button type="submit">Login</button>
           <span>
             Don't have an account? <Link to="/register">Register</Link>
@@ -110,11 +126,13 @@ const Login = () => {
         </form>
       </FormContainer>
 
+      {/* Toast Container */}
       <ToastContainer />
     </>
   );
 };
 
+// Form Container
 const FormContainer = styled.div`
   height: 100vh;
   width: 100vw;

@@ -1,5 +1,7 @@
+// Server URI
 export const host = proce.env.REACT_APP_SERVER_URI;
 
+// API Routes
 export const registerRoute = `${host}/api/auth/register`;
 export const loginRoute = `${host}/api/auth/login`;
 export const setAvatarRoute = `${host}/api/auth/setavatar`;

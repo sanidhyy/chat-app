@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SetAvatar from "./pages/SetAvatar";
 
+// App
 const App = () => {
   return (
     <BrowserRouter>

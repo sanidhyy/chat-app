@@ -4,23 +4,28 @@ import Picker from "emoji-picker-react";
 import { IoMdSend } from "react-icons/io";
 import { BsEmojiSmileFill } from "react-icons/bs";
 
+// Chat Input
 const ChatInput = ({ handleSendMsg }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState("");
 
+  // Handle Emoji Picker
   const handleEmojiPickerHideShow = () => {
     setShowEmojiPicker(!showEmojiPicker);
   };
 
+  // Handle Emoji Click
   const handleEmojiClick = (e, emoji) => {
     let msg = message;
     msg += emoji.emoji;
     setMessage(msg);
   };
 
+  // Send Chat
   const sendChat = (e) => {
     e.preventDefault();
 
+    // Check if string is empty or contains whitespaces
     const isEmptyOrSpaces = (str) => {
       return /^\s*$/.test(str);
     };
@@ -34,11 +39,13 @@ const ChatInput = ({ handleSendMsg }) => {
   return (
     <Container>
       <div className="button-container">
+        {/* Emoji Selector */}
         <div className="emoji">
           <BsEmojiSmileFill onClick={handleEmojiPickerHideShow} />
           {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div>
       </div>
+      {/* Form Input */}
       <form className="input-container" onSubmit={(e) => sendChat(e)}>
         <input
           type="text"
@@ -54,6 +61,7 @@ const ChatInput = ({ handleSendMsg }) => {
   );
 };
 
+// Styled Components
 const Container = styled.div`
   display: grid;
   grid-template-columns: 5% 95%;

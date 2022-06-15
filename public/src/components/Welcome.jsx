@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Robot from "../assets/robot.gif";
 
+// Welcome
 const Welcome = ({ currentUser }) => {
   return (
     <Container>
@@ -14,6 +15,7 @@ const Welcome = ({ currentUser }) => {
   );
 };
 
+// Styled Components
 const Container = styled.div`
   display: flex;
   justify-content: center;

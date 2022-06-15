@@ -7,11 +7,13 @@ import ChatInput from "./ChatInput";
 import Messages from "./Messages";
 import { getAllMessagesRoute, sendMessageRoute } from "../utils/APIRoutes";
 
+// Chat Container
 const ChatContainer = ({ currentChat, currentUser, socket }) => {
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(undefined);
   const scrollRef = useRef();
 
+  // fetch all messages
   useEffect(() => {
     const fetchAllMessages = async () => {
       const response = await axios.post(getAllMessagesRoute, {
@@ -25,6 +27,7 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
     fetchAllMessages();
   }, [currentChat]); // eslint-disable-line
 
+  // socket.io message recieve
   useEffect(() => {
     if (socket.current) {
       socket.current.on("msg-recieve", (msg) => {
@@ -33,14 +36,17 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
     }
   }, []); // eslint-disable-line
 
+  // check message from server using socket.io
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage]);
 
+  // change scroll to latest message
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behaviour: "smooth" });
   }, [messages]);
 
+  // Handle Send Messages
   const handleSendMsg = async (msg) => {
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
@@ -48,6 +54,7 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
       message: msg,
     });
 
+    // socket.io send msg
     socket.current.emit("send-msg", {
       to: currentChat._id,
       from: currentUser._id,
@@ -63,6 +70,7 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
     <Container>
       <div className="chat-header">
         <div className="user-details">
+          {/* User Avatar */}
           <div className="avatar">
             <img
               src={`${
@@ -73,18 +81,22 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
               alt={`${currentChat?.username}'s Avatar`}
             />
           </div>
+          {/* Avatar Username */}
           <div className="username">
             <h3>{currentChat?.username}</h3>
           </div>
         </div>
+        {/* Logout */}
         <Logout />
       </div>
+      {/* Messages */}
       <Messages messages={messages} scrollRef={scrollRef} />
       <ChatInput handleSendMsg={handleSendMsg} />
     </Container>
   );
 };
 
+// Styled Components
 const Container = styled.div`
   padding-top: 1rem;
   display: grid;

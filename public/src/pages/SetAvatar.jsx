@@ -8,13 +8,16 @@ import { Buffer } from "buffer";
 
 import "react-toastify/dist/ReactToastify.css";
 import { setAvatarRoute } from "../utils/APIRoutes";
+
+// Set Avatar
 const SetAvatar = () => {
-  const api = "https://api.multiavatar.com";
+  const API_URI = "https://api.multiavatar.com"; // Api url
   const navigate = useNavigate();
   const [avatars, setAvatars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedAvatar, setSelectedAvatar] = useState(undefined);
 
+  // Show toast error message
   const showToast = (msg) => {
     const toastOptions = {
       position: "bottom-right",
@@ -27,6 +30,7 @@ const SetAvatar = () => {
     return toast.error(msg, toastOptions);
   };
 
+  // Check user login
   useEffect(() => {
     if (!localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER))
       return navigate("/login");
@@ -36,6 +40,7 @@ const SetAvatar = () => {
     if (user.isAvatarImageSet) return navigate("/");
   }, []); // eslint-disable-line
 
+  // set profile picture
   const setProfilePicture = async () => {
     if (selectedAvatar === undefined) {
       showToast("Please select an avatar");
@@ -47,6 +52,7 @@ const SetAvatar = () => {
         image: avatars[selectedAvatar],
       });
 
+      // if avatar image is set
       if (data.isSet) {
         user.isAvatarImageSet = true;
         user.avatarImage = data.image;
@@ -62,16 +68,18 @@ const SetAvatar = () => {
     }
   };
 
+  // Fetch Avatars
   const fetchAvatars = async () => {
     setIsLoading(true);
     const data = [];
     // foreach doesn't work with APIs
     for (let i = 0; i < 4; i++) {
       const image = await axios.get(
-        `${api}/${Math.round(Math.random() * 1000)}?apikey=${
+        `${API_URI}/${Math.round(Math.random() * 1000)}?apikey=${
           process.env.REACT_APP_MULTIAVATAR_API_KEY
         }`
       );
+      // change image to base64
       const buffer = new Buffer(image.data);
       data.push(buffer.toString("base64"));
     }
@@ -81,6 +89,7 @@ const SetAvatar = () => {
     setSelectedAvatar(undefined);
   };
 
+  // fetch avatars when page is first loaded
   useEffect(() => {
     fetchAvatars();
   }, []);
@@ -88,6 +97,7 @@ const SetAvatar = () => {
   return (
     <>
       {isLoading ? (
+        // Loader
         <Container>
           <img src={loader} alt="Loading..." className="loader" />
         </Container>
@@ -96,6 +106,8 @@ const SetAvatar = () => {
           <div className="title-container">
             <h1>Pick an avatar as your profile picture</h1>
           </div>
+
+          {/* Avatars */}
           <div className="avatars">
             {avatars.map((avatar, i) => {
               return (
@@ -113,9 +125,12 @@ const SetAvatar = () => {
             })}
           </div>
           <div className="btn-container">
+            {/* set profile picture */}
             <button className="submit-btn" onClick={setProfilePicture}>
               Set as Profile Picture
             </button>
+
+            {/* Fetch new avatars */}
             <button
               className="reload-btn"
               onClick={fetchAvatars}
@@ -138,11 +153,14 @@ const SetAvatar = () => {
           </div>
         </Container>
       )}
+
+      {/* Toast container */}
       <ToastContainer />
     </>
   );
 };
 
+// Styled Components
 const Container = styled.div`
   display: flex;
   justify-content: center;

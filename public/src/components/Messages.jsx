@@ -2,15 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+// Messages
 const Messages = ({ messages, scrollRef }) => {
   return (
     <Container>
+      {/* Show each message */}
       {messages?.map((message) => {
         return (
           <div ref={scrollRef} key={uuidv4()}>
+            {/* sended - Message sent from user */}
+            {/* recieved - Message recieved by user */}
             <div
               className={`message ${message.fromSelf ? "sended" : "recieved"}`}
             >
+              {/* Message */}
               <div className="content">
                 <p>{message.message}</p>
               </div>
@@ -22,6 +27,7 @@ const Messages = ({ messages, scrollRef }) => {
   );
 };
 
+// Styled Components
 const Container = styled.div`
   padding: 1rem 2rem;
   display: flex;
