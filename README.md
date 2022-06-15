@@ -1,7 +1,7 @@
 # Snappy - A React JS Chat Application
 
-![React JS Chat Application](https://user-images.githubusercontent.com/71302066/173806215-6cc26ebb-3608-41a5-bdf6-3febeb31634b.png)
 
+![CHAT APPLICATION WITH REACT JS](https://user-images.githubusercontent.com/71302066/173859274-3176af8c-0819-4a14-9746-a6f85ba12db5.png)
 
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/Technical-Shubham-tech)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Technical-Shubham-tech/chat-app/commits/main)
