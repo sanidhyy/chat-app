@@ -3,13 +3,13 @@
 
 ![CHAT APPLICATION WITH REACT JS](https://user-images.githubusercontent.com/71302066/173859274-3176af8c-0819-4a14-9746-a6f85ba12db5.png)
 
-[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/Technical-Shubham-tech)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Technical-Shubham-tech/chat-app/commits/main)
-[![GitHub license](https://img.shields.io/github/license/Technical-Shubham-tech/chat-app)](https://github.com/Technical-Shubham-tech/chat-app/blob/main/LICENSE.md)
-[![GitHub branches](https://badgen.net/github/branches/Technical-Shubham-tech/chat-app/)](https://github.com/Technical-Shubham-tech/chat-app/branches)
-[![Github commits](https://badgen.net/github/commits/Technical-Shubham-tech/chat-app/main)](https://github.com/Technical-Shubham-tech/chat-app/commits/)
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/sanidhyy)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/sanidhyy/chat-app/commits/main)
+[![GitHub license](https://img.shields.io/github/license/sanidhyy/chat-app)](https://github.com/sanidhyy/chat-app/blob/main/LICENSE.md)
+[![GitHub branches](https://badgen.net/github/branches/sanidhyy/chat-app/)](https://github.com/sanidhyy/chat-app/branches)
+[![Github commits](https://badgen.net/github/commits/sanidhyy/chat-app/main)](https://github.com/sanidhyy/chat-app/commits/)
 [![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://snappy-chatapp.netlify.app/)
-[![GitHub issues](https://img.shields.io/github/issues/Technical-Shubham-tech/chat-app)](https://github.com/Technical-Shubham-tech/chat-app/issues)
+[![GitHub issues](https://img.shields.io/github/issues/sanidhyy/chat-app)](https://github.com/sanidhyy/chat-app/issues)
 
 ## ⚠️ Before you start
 1. Make sure **Git** and **NodeJS** is installed
@@ -79,6 +79,6 @@ This app is currently not mobile responsive. Only responsive upto Tablet devices
 [<img src="https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" width="200" />](https://www.buymeacoffee.com/sanidhy "Buy me a Coffee")
 
 ## 🚀 Follow Me
-[![GitHub followers](https://img.shields.io/github/followers/Technical-Shubham-tech?style=social&label=Follow&maxAge=2592000)](https://github.com/Technical-Shubham-tech)
-[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FTechnicalShubam)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FTechnical-Shubham-tech%2Fmedical-chat-app)
+[![GitHub followers](https://img.shields.io/github/followers/sanidhyy?style=social&label=Follow&maxAge=2592000)](https://github.com/sanidhyy)
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fsanidhyyy)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fsanidhyy%2Fmedical-chat-app)
 [![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/channel/UCNAz_hUVBG2ZUN8TVm0bmYw)
