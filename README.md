@@ -60,6 +60,14 @@ Make sure you don't share them publicly.
 
 ![Authentication Page](https://user-images.githubusercontent.com/71302066/173814643-c1e05a3c-7089-4e79-b1b2-25ddf987cb8b.png)
 
+### Need Help?
+
+If you run into issues during installation or setup:
+
+- **GitHub Discussions** — [Open a Q&A discussion](https://github.com/sanidhyy/chat-app/discussions/new?category=q-a) for setup and troubleshooting help.
+- **Email** — [sanidhyyy@gmail.com](mailto:sanidhyyy@gmail.com)
+- **Discord** — `@sanidhyy`
+
 ## 📃 Built with
 [<img src="https://media3.giphy.com/media/ln7z2eWriiQAllfVcn/200w.webp" width="100">](https://www.javascript.com/)
 [<img src="https://i.giphy.com/media/eNAsjO55tPbgaor7ma/200w.webp" width="100">](https://reactjs.org/)
