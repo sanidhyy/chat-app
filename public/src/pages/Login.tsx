@@ -1,5 +1,5 @@
 import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
