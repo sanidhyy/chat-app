@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import DefaultAvatar from "../assets/user-default.png";
+import type { User } from "../types";
 
-// Contacts
-const Contacts = ({ contacts, currentUser, changeChat }) => {
-  const [currentSelected, setCurrentSelected] = useState(undefined);
+type ContactsProps = {
+  contacts: User[];
+  currentUser?: User;
+  changeChat: (contact: User) => void;
+};
+
+const Contacts = ({ contacts, currentUser, changeChat }: ContactsProps) => {
+  const [currentSelected, setCurrentSelected] = useState<number | undefined>(
+    undefined
+  );
   const [search, setSearch] = useState("");
   const currentUserName = currentUser?.username;
   const currentUserImage = currentUser?.avatarImage;
 
   // Check if string is empty or contains whitespaces
-  const isEmptyOrSpaces = (str) => {
+  const isEmptyOrSpaces = (str: string) => {
     return /^\s*$/.test(str);
   };
 
@@ -23,13 +31,13 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
   );
 
   // Change Current Chat
-  const changeCurrentChat = (index, contact) => {
+  const changeCurrentChat = (index: number, contact: User) => {
     setCurrentSelected(index);
     changeChat(contact);
   };
 
   // Show each contacts
-  const showContacts = (contact, key) => {
+  const showContacts = (contact: User, key: number) => {
     return (
       <div
         className={`contact ${key === currentSelected ? "selected" : ""}`}

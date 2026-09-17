@@ -1,9 +1,14 @@
-import React from "react";
+import { type Ref } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import type { ChatMessage } from "../types";
 
-// Messages
-const Messages = ({ messages, scrollRef }) => {
+type MessagesProps = {
+  messages: ChatMessage[];
+  scrollRef: Ref<HTMLDivElement>;
+};
+
+const Messages = ({ messages, scrollRef }: MessagesProps) => {
   return (
     <Container>
       {/* Show each message */}

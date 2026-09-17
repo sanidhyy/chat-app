@@ -1,35 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { io, type Socket } from "socket.io-client";
 import { allUsersRoute, host } from "../utils/APIRoutes";
+import { getStoredUser } from "../utils/storage";
+import type { User } from "../types";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 import ChatContainer from "../components/ChatContainer";
-import { io } from "socket.io-client";
 
-// Chat
 const Chat = () => {
-  const socket = useRef();
+  const socket = useRef<Socket | null>(null);
   const navigate = useNavigate();
-  const [contacts, setContacts] = useState([]);
-  const [currentUser, setCurrentUser] = useState(undefined);
-  const [currentChat, setCurrentChat] = useState(undefined);
+  const [contacts, setContacts] = useState<User[]>([]);
+  const currentUser = getStoredUser() ?? undefined;
+  const [currentChat, setCurrentChat] = useState<User | undefined>(undefined);
 
-  // fetch current user
   useEffect(() => {
-    const fetchCurrentUser = async () => {
-      if (!localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER))
-        return navigate("/login");
-      setCurrentUser(
-        await JSON.parse(
-          localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER)
-        )
-      );
-    };
-
-    fetchCurrentUser();
-  }, []); // eslint-disable-line
+    if (!currentUser) navigate("/login");
+  }, [currentUser, navigate]);
 
   // Socket.io add user
   useEffect(() => {
@@ -43,17 +33,22 @@ const Chat = () => {
   useEffect(() => {
     const fetchAllUsers = async () => {
       if (currentUser) {
-        if (!currentUser.isAvatarImageSet) return navigate("/setAvatar");
-        const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+        if (!currentUser.isAvatarImageSet) {
+          navigate("/setAvatar");
+          return;
+        }
+        const data = await axios.get<User[]>(
+          `${allUsersRoute}/${currentUser._id}`
+        );
         setContacts(data.data);
       }
     };
 
     fetchAllUsers();
-  }, [currentUser]); // eslint-disable-line
+  }, [currentUser, navigate]);
 
   // handle chat change
-  const handleChatChange = (chat) => {
+  const handleChatChange = (chat: User) => {
     setCurrentChat(chat);
   };
 
@@ -67,7 +62,7 @@ const Chat = () => {
           changeChat={handleChatChange}
         />
         {/* check If no chat is selected */}
-        {currentChat === undefined ? (
+        {currentChat === undefined || !currentUser ? (
           <Welcome currentUser={currentUser} />
         ) : (
           <ChatContainer

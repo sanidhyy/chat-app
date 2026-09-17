@@ -1,9 +1,12 @@
-import React from "react";
 import styled from "styled-components";
 import Robot from "../assets/robot.gif";
+import type { User } from "../types";
 
-// Welcome
-const Welcome = ({ currentUser }) => {
+type WelcomeProps = {
+  currentUser?: User;
+};
+
+const Welcome = ({ currentUser }: WelcomeProps) => {
   return (
     <Container>
       <img src={Robot} alt="Welcome" />

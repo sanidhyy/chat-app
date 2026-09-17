@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,8 +7,10 @@ import multiavatar from "@multiavatar/multiavatar/esm";
 
 import "react-toastify/dist/ReactToastify.css";
 import { setAvatarRoute } from "../utils/APIRoutes";
+import { getStoredUser, setStoredUser } from "../utils/storage";
+import type { SetAvatarResponse } from "../types";
 
-const svgToBase64 = (svg) => {
+const svgToBase64 = (svg: string) => {
   const bytes = new TextEncoder().encode(svg);
   let binary = "";
   bytes.forEach((byte) => {
@@ -26,10 +28,11 @@ const generateAvatars = () =>
 const SetAvatar = () => {
   const navigate = useNavigate();
   const [avatars, setAvatars] = useState(generateAvatars);
-  const [selectedAvatar, setSelectedAvatar] = useState(undefined);
+  const [selectedAvatar, setSelectedAvatar] = useState<number | undefined>(
+    undefined
+  );
 
-  // Show toast error message
-  const showToast = (msg) => {
+  const showToast = (msg: string) => {
     const toastOptions = {
       position: "bottom-right",
       autoClose: 8000,
@@ -43,37 +46,36 @@ const SetAvatar = () => {
 
   // Check user login
   useEffect(() => {
-    if (!localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER))
-      return navigate("/login");
-    const user = JSON.parse(
-      localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER)
-    );
-    if (user.isAvatarImageSet) return navigate("/");
-  }, []); // eslint-disable-line
+    const user = getStoredUser();
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    if (user.isAvatarImageSet) navigate("/");
+  }, [navigate]);
 
-  // set profile picture
   const setProfilePicture = async () => {
     if (selectedAvatar === undefined) {
       showToast("Please select an avatar");
     } else {
-      const user = await JSON.parse(
-        localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER)
+      const user = getStoredUser();
+      if (!user) {
+        navigate("/login");
+        return;
+      }
+      const { data } = await axios.post<SetAvatarResponse>(
+        `${setAvatarRoute}/${user._id}`,
+        {
+          image: avatars[selectedAvatar],
+        }
       );
-      const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
-        image: avatars[selectedAvatar],
-      });
 
-      // if avatar image is set
       if (data.isSet) {
         user.isAvatarImageSet = true;
         user.avatarImage = data.image;
-        localStorage.setItem(
-          import.meta.env.VITE_CHAT_APP_USER,
-          JSON.stringify(user)
-        );
+        setStoredUser(user);
         navigate("/");
       } else {
-        console.log(data);
         showToast("Error setting avatar. Please try again");
       }
     }

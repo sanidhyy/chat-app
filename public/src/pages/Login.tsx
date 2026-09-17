@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
@@ -7,19 +7,24 @@ import axios from "axios";
 
 import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../utils/APIRoutes";
+import { getStoredUser, setStoredUser } from "../utils/storage";
+import type { AuthResponse } from "../types";
 
-// Login
+type LoginForm = {
+  email: string;
+  password: string;
+};
+
 const Login = () => {
   const navigate = useNavigate();
 
-  // form initial state
-  const initialState = {
+  const initialState: LoginForm = {
     email: "",
     password: "",
   };
 
   // Show toast error msg
-  const showToast = (msg) => {
+  const showToast = (msg: string) => {
     const toastOptions = {
       position: "bottom-right",
       autoClose: 8000,
@@ -35,32 +40,25 @@ const Login = () => {
 
   // Check if user is logged in
   useEffect(() => {
-    if (localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER))
-      return navigate("/");
-  }, []); // eslint-disable-line
+    if (getStoredUser()) navigate("/");
+  }, [navigate]);
 
-  // handle form Submit
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // prevents reload of page
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-    // handle Validation
     if (handleValidation()) {
       const { email, password } = values;
 
-      const { data } = await axios.post(loginRoute, {
+      const { data } = await axios.post<AuthResponse>(loginRoute, {
         email,
         password,
       });
 
-      if (!data.status) showToast(data.msg);
+      if (!data.status) showToast(data.msg ?? "Unable to login.");
 
-      // Success
-      if (data.status) {
-        localStorage.setItem(
-          import.meta.env.VITE_CHAT_APP_USER,
-          JSON.stringify(data.user)
-        );
-        return navigate("/");
+      if (data.status && data.user) {
+        setStoredUser(data.user);
+        navigate("/");
       }
     }
   };
@@ -70,11 +68,11 @@ const Login = () => {
     const { email, password } = values;
 
     // Email validation
-    const isInvalidEmail = (email) => {
+    const isInvalidEmail = (emailValue: string) => {
       const regex = new RegExp( // eslint-disable-next-line
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
       );
-      return !email || regex.test(email) === false;
+      return !emailValue || regex.test(emailValue) === false;
     };
 
     if (isInvalidEmail(email) || password.length < 3 || /\s/.test(password)) {
@@ -85,7 +83,7 @@ const Login = () => {
   };
 
   // handle form change
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 

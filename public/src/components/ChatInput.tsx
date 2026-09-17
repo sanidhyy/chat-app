@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import { useState, type FormEvent, type MouseEvent } from "react";
 import styled from "styled-components";
 import Picker from "emoji-picker-react";
 import { IoMdSend } from "react-icons/io";
 import { BsEmojiSmileFill } from "react-icons/bs";
 
-// Chat Input
-const ChatInput = ({ handleSendMsg }) => {
+type ChatInputProps = {
+  handleSendMsg: (msg: string) => void;
+};
+
+type EmojiClickData = {
+  emoji: string;
+};
+
+const ChatInput = ({ handleSendMsg }: ChatInputProps) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -15,18 +22,18 @@ const ChatInput = ({ handleSendMsg }) => {
   };
 
   // Handle Emoji Click
-  const handleEmojiClick = (e, emoji) => {
+  const handleEmojiClick = (_e: MouseEvent, emoji: EmojiClickData) => {
     let msg = message;
     msg += emoji.emoji;
     setMessage(msg);
   };
 
   // Send Chat
-  const sendChat = (e) => {
+  const sendChat = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Check if string is empty or contains whitespaces
-    const isEmptyOrSpaces = (str) => {
+    const isEmptyOrSpaces = (str: string) => {
       return /^\s*$/.test(str);
     };
 

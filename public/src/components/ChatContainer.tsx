@@ -1,26 +1,37 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type RefObject } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import type { Socket } from "socket.io-client";
 import Logout from "./Logout";
 import DefaultAvatar from "../assets/user-default.png";
 import ChatInput from "./ChatInput";
 import Messages from "./Messages";
 import { getAllMessagesRoute, sendMessageRoute } from "../utils/APIRoutes";
+import type { ChatMessage, User } from "../types";
 
-// Chat Container
-const ChatContainer = ({ currentChat, currentUser, socket }) => {
-  const [messages, setMessages] = useState([]);
-  const scrollRef = useRef();
+type ChatContainerProps = {
+  currentChat: User;
+  currentUser: User;
+  socket: RefObject<Socket | null>;
+};
+
+const ChatContainer = ({
+  currentChat,
+  currentUser,
+  socket,
+}: ChatContainerProps) => {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   // fetch all messages
   useEffect(() => {
     const fetchAllMessages = async () => {
-      const response = await axios.post(getAllMessagesRoute, {
+      const response = await axios.post<ChatMessage[]>(getAllMessagesRoute, {
         from: currentUser?._id,
         to: currentChat?._id,
       });
 
-      setMessages(response?.data);
+      setMessages(response.data ?? []);
     };
 
     fetchAllMessages();
@@ -29,7 +40,7 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
   // socket.io message recieve
   useEffect(() => {
     if (socket.current) {
-      socket.current.on("msg-recieve", (msg) => {
+      socket.current.on("msg-recieve", (msg: string) => {
         setMessages((prev) => [...prev, { fromSelf: false, message: msg }]);
       });
     }
@@ -37,11 +48,11 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
 
   // change scroll to latest message
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behaviour: "smooth" });
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   // Handle Send Messages
-  const handleSendMsg = async (msg) => {
+  const handleSendMsg = async (msg: string) => {
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
       to: currentChat._id,
@@ -49,7 +60,7 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
     });
 
     // socket.io send msg
-    socket.current.emit("send-msg", {
+    socket.current?.emit("send-msg", {
       to: currentChat._id,
       from: currentUser._id,
       message: msg,

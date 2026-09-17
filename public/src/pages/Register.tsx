@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
@@ -7,13 +7,20 @@ import axios from "axios";
 
 import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "../utils/APIRoutes";
+import { getStoredUser, setStoredUser } from "../utils/storage";
+import type { AuthResponse } from "../types";
 
-// Register
+type RegisterForm = {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+
 const Register = () => {
   const navigate = useNavigate();
 
-  // form initial state
-  const initialState = {
+  const initialState: RegisterForm = {
     username: "",
     email: "",
     password: "",
@@ -21,7 +28,7 @@ const Register = () => {
   };
 
   // Show toast error message
-  const showToast = (msg) => {
+  const showToast = (msg: string) => {
     const toastOptions = {
       position: "bottom-right",
       autoClose: 8000,
@@ -37,30 +44,24 @@ const Register = () => {
 
   // Check if user is already logged in
   useEffect(() => {
-    if (localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER))
-      return navigate("/");
-  }, []); // eslint-disable-line
+    if (getStoredUser()) navigate("/");
+  }, [navigate]);
 
-  // handle form Submit
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // prevents reload of page
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (handleValidation()) {
       const { username, email, password } = values;
 
-      const { data } = await axios.post(registerRoute, {
+      const { data } = await axios.post<AuthResponse>(registerRoute, {
         username,
         email,
         password,
       });
 
-      if (!data.status) showToast(data.msg);
+      if (!data.status) showToast(data.msg ?? "Unable to register.");
 
-      // Registration success
-      if (data.status) {
-        localStorage.setItem(
-          import.meta.env.VITE_CHAT_APP_USER,
-          JSON.stringify(data.user)
-        );
+      if (data.status && data.user) {
+        setStoredUser(data.user);
         navigate("/");
       }
     }
@@ -71,16 +72,16 @@ const Register = () => {
     const { username, email, password, confirmPassword } = values;
 
     // Check if string is empty or contains whitespaces
-    const isEmptyOrSpaces = (str) => {
+    const isEmptyOrSpaces = (str: string) => {
       return /^\s*$/.test(str);
     };
 
     // email validation
-    const isInvalidEmail = (email) => {
+    const isInvalidEmail = (emailValue: string) => {
       const regex = new RegExp( // eslint-disable-next-line
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
       );
-      return !email || regex.test(email) === false;
+      return !emailValue || regex.test(emailValue) === false;
     };
 
     // vaidate username
@@ -116,7 +117,7 @@ const Register = () => {
   };
 
   // handle form change
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
