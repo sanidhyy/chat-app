@@ -2,7 +2,6 @@
 
 [fork]: /fork
 [pr]: /compare
-[style]: https://standardjs.com/
 [code-of-conduct]: CODE_OF_CONDUCT.md
 
 Hi there! We're thrilled that you'd like to contribute to this project. Your help is essential for keeping it great.
@@ -18,21 +17,21 @@ We'd also love PRs. If you're thinking of a large PR, we advise opening up an is
 ## Submitting a pull request
 
 1. [Fork][fork] and clone the repository.
-1. Configure and install the dependencies: `npm install`.
-1. Make sure the tests pass on your machine: `npm test`, note: these tests also apply the linter, so there's no need to lint separately.
+1. Copy `server/.env.example` to `server/.env` and `public/.env.example` to `public/.env`, then fill in the values described in the README.
+1. Install dependencies with pnpm in both packages: `cd server && pnpm install`, then `cd ../public && pnpm install`.
+1. Run `pnpm lint` and `pnpm build` in `server/` and `public/`.
 1. Create a new branch: `git checkout -b my-branch-name`.
-1. Make your change, add tests, and make sure the tests still pass.
+1. Make your change, and make sure lint and build still pass.
 1. Push to your fork and [submit a pull request][pr].
-1. Pat your self on the back and wait for your pull request to be reviewed and merged.
+1. Pat yourself on the back and wait for your pull request to be reviewed and merged.
 
 Here are a few things you can do that will increase the likelihood of your pull request being accepted:
 
-- Follow the [style guide][style] which is using standard. Any linting errors should be shown when running `npm test`.
-- Write and update tests.
+- Keep ESLint clean (`pnpm lint`) and the TypeScript build green (`pnpm build`).
 - Keep your changes as focused as possible. If there are multiple changes you would like to make that are not dependent upon each other, consider submitting them as separate pull requests.
 - Write a [good commit message](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
 
-Work in Progress pull requests are also welcome to get feedback early on, or if there is something blocked you.
+Work in Progress pull requests are also welcome to get feedback early on, or if there is something blocking you.
 
 ## Resources
 
