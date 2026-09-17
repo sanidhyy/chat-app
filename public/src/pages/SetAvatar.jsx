@@ -32,10 +32,10 @@ const SetAvatar = () => {
 
   // Check user login
   useEffect(() => {
-    if (!localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER))
+    if (!localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER))
       return navigate("/login");
     const user = JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)
+      localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER)
     );
     if (user.isAvatarImageSet) return navigate("/");
   }, []); // eslint-disable-line
@@ -46,7 +46,7 @@ const SetAvatar = () => {
       showToast("Please select an avatar");
     } else {
       const user = await JSON.parse(
-        localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)
+        localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER)
       );
       const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
         image: avatars[selectedAvatar],
@@ -57,7 +57,7 @@ const SetAvatar = () => {
         user.isAvatarImageSet = true;
         user.avatarImage = data.image;
         localStorage.setItem(
-          process.env.REACT_APP_CHAT_APP_USER,
+          import.meta.env.VITE_CHAT_APP_USER,
           JSON.stringify(user)
         );
         navigate("/");
@@ -76,7 +76,7 @@ const SetAvatar = () => {
     for (let i = 0; i < 4; i++) {
       const image = await axios.get(
         `${API_URI}/${Math.round(Math.random() * 1000)}?apikey=${
-          process.env.REACT_APP_MULTIAVATAR_API_KEY
+          import.meta.env.VITE_MULTIAVATAR_API_KEY
         }`
       );
       // change image to base64
@@ -91,7 +91,7 @@ const SetAvatar = () => {
 
   // fetch avatars when page is first loaded
   useEffect(() => {
-    fetchAvatars();
+    fetchAvatars(); // eslint-disable-line react-hooks/set-state-in-effect -- load avatars on mount
   }, []);
 
   return (

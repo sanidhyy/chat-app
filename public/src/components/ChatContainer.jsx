@@ -10,7 +10,6 @@ import { getAllMessagesRoute, sendMessageRoute } from "../utils/APIRoutes";
 // Chat Container
 const ChatContainer = ({ currentChat, currentUser, socket }) => {
   const [messages, setMessages] = useState([]);
-  const [arrivalMessage, setArrivalMessage] = useState(undefined);
   const scrollRef = useRef();
 
   // fetch all messages
@@ -31,15 +30,10 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
   useEffect(() => {
     if (socket.current) {
       socket.current.on("msg-recieve", (msg) => {
-        setArrivalMessage({ fromSelf: false, message: msg });
+        setMessages((prev) => [...prev, { fromSelf: false, message: msg }]);
       });
     }
   }, []); // eslint-disable-line
-
-  // check message from server using socket.io
-  useEffect(() => {
-    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage]);
 
   // change scroll to latest message
   useEffect(() => {

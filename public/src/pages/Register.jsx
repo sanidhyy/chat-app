@@ -37,7 +37,7 @@ const Register = () => {
 
   // Check if user is already logged in
   useEffect(() => {
-    if (localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER))
+    if (localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER))
       return navigate("/");
   }, []); // eslint-disable-line
 
@@ -58,7 +58,7 @@ const Register = () => {
       // Registration success
       if (data.status) {
         localStorage.setItem(
-          process.env.REACT_APP_CHAT_APP_USER,
+          import.meta.env.VITE_CHAT_APP_USER,
           JSON.stringify(data.user)
         );
         navigate("/");

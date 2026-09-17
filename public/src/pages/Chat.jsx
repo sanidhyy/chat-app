@@ -19,11 +19,11 @@ const Chat = () => {
   // fetch current user
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      if (!localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER))
+      if (!localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER))
         return navigate("/login");
       setCurrentUser(
         await JSON.parse(
-          localStorage.getItem(process.env.REACT_APP_CHAT_APP_USER)
+          localStorage.getItem(import.meta.env.VITE_CHAT_APP_USER)
         )
       );
     };

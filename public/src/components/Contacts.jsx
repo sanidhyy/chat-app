@@ -1,40 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import DefaultAvatar from "../assets/user-default.png";
 
 // Contacts
 const Contacts = ({ contacts, currentUser, changeChat }) => {
-  const [currentUserName, setCurrentUserName] = useState(undefined);
-  const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
   const [search, setSearch] = useState("");
-  const [filteredContacts, setFilteredContacts] = useState([]);
+  const currentUserName = currentUser?.username;
+  const currentUserImage = currentUser?.avatarImage;
 
   // Check if string is empty or contains whitespaces
   const isEmptyOrSpaces = (str) => {
     return /^\s*$/.test(str);
   };
 
-  // Check current user
-  useEffect(() => {
-    if (currentUser) {
-      setCurrentUserImage(currentUser.avatarImage);
-      setCurrentUserName(currentUser.username);
-    }
-  }, [currentUser]);
-
-  // Search Contacts Logic
-  useEffect(() => {
-    const re = RegExp(
-      `.*${search.toLowerCase().replace(/\s+/g, "").split("").join(".*")}.*`
-    );
-    const searchResults = contacts.filter((v) =>
-      v.username.toLowerCase().match(re)
-    );
-
-    setFilteredContacts(searchResults);
-  }, [search]);
+  const re = RegExp(
+    `.*${search.toLowerCase().replace(/\s+/g, "").split("").join(".*")}.*`
+  );
+  const filteredContacts = contacts.filter((v) =>
+    v.username.toLowerCase().match(re)
+  );
 
   // Change Current Chat
   const changeCurrentChat = (index, contact) => {

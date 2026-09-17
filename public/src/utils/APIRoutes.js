@@ -1,5 +1,5 @@
 // Server URI
-export const host = process.env.REACT_APP_SERVER_URI;
+export const host = import.meta.env.VITE_SERVER_URI;
 
 // API Routes
 export const registerRoute = `${host}/api/auth/register`;
