@@ -1,6 +1,5 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-// Message Schema
 const msgSchema = new mongoose.Schema(
   {
     message: {
@@ -9,10 +8,13 @@ const msgSchema = new mongoose.Schema(
         required: true,
       },
     },
-    users: Array,
+    users: {
+      type: [String],
+      required: true,
+    },
     sender: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Users",
       required: true,
     },
   },
@@ -21,4 +23,4 @@ const msgSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Messages", msgSchema);
+export default mongoose.model("Messages", msgSchema);

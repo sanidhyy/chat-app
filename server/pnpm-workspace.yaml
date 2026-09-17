@@ -1,3 +1,4 @@
 allowBuilds:
   bcrypt: true
-  nodemon: false
+  esbuild: true
+confirmModulesPurge: false
