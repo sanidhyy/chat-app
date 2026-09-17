@@ -1,0 +1,4 @@
+allowBuilds:
+  core-js: true
+  core-js-pure: true
+  styled-components: true
