@@ -5,6 +5,7 @@
   "author": "Sanidhya Kr. Verma",
   "license": "MIT",
   "description": "",
+  "packageManager": "pnpm@11.26.0",
   "scripts": {
     "test": "echo \"Error : no test specified\" && exit 1",
     "start": "nodemon index.js"
