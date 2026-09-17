@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import loader from "../assets/loader.gif";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import { Buffer } from "buffer";
+import multiavatar from "@multiavatar/multiavatar/esm";
 
 import "react-toastify/dist/ReactToastify.css";
 import { setAvatarRoute } from "../utils/APIRoutes";
 
+const svgToBase64 = (svg) => {
+  const bytes = new TextEncoder().encode(svg);
+  let binary = "";
+  bytes.forEach((byte) => {
+    binary += String.fromCharCode(byte);
+  });
+  return btoa(binary);
+};
+
+const generateAvatars = () =>
+  Array.from({ length: 4 }, () =>
+    svgToBase64(multiavatar(crypto.randomUUID()))
+  );
+
 // Set Avatar
 const SetAvatar = () => {
-  const API_URI = "https://api.multiavatar.com"; // Api url
   const navigate = useNavigate();
-  const [avatars, setAvatars] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [avatars, setAvatars] = useState(generateAvatars);
   const [selectedAvatar, setSelectedAvatar] = useState(undefined);
 
   // Show toast error message
@@ -68,41 +79,15 @@ const SetAvatar = () => {
     }
   };
 
-  // Fetch Avatars
-  const fetchAvatars = async () => {
-    setIsLoading(true);
-    const data = [];
-    // foreach doesn't work with APIs
-    for (let i = 0; i < 4; i++) {
-      const image = await axios.get(
-        `${API_URI}/${Math.round(Math.random() * 1000)}?apikey=${
-          import.meta.env.VITE_MULTIAVATAR_API_KEY
-        }`
-      );
-      // change image to base64
-      const buffer = new Buffer(image.data);
-      data.push(buffer.toString("base64"));
-    }
-
-    setAvatars(data);
-    setIsLoading(false);
+  // Generate Avatars
+  const fetchAvatars = () => {
+    setAvatars(generateAvatars());
     setSelectedAvatar(undefined);
   };
 
-  // fetch avatars when page is first loaded
-  useEffect(() => {
-    fetchAvatars(); // eslint-disable-line react-hooks/set-state-in-effect -- load avatars on mount
-  }, []);
-
   return (
     <>
-      {isLoading ? (
-        // Loader
-        <Container>
-          <img src={loader} alt="Loading..." className="loader" />
-        </Container>
-      ) : (
-        <Container>
+      <Container>
           <div className="title-container">
             <h1>Pick an avatar as your profile picture</h1>
           </div>
@@ -152,7 +137,6 @@ const SetAvatar = () => {
             </button>
           </div>
         </Container>
-      )}
 
       {/* Toast container */}
       <ToastContainer />

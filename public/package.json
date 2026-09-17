@@ -5,8 +5,8 @@
   "type": "module",
   "packageManager": "pnpm@11.26.0",
   "dependencies": {
+    "@multiavatar/multiavatar": "^1.0.7",
     "axios": "^1.18.0",
-    "buffer": "^6.0.3",
     "emoji-picker-react": "^3.5.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
