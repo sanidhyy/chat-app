@@ -7,6 +7,7 @@ export type User = {
 };
 
 export type ChatMessage = {
+  id: string;
   fromSelf: boolean;
   message: string;
 };

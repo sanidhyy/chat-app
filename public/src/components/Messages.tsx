@@ -1,6 +1,5 @@
 import { type Ref } from "react";
 import styled from "styled-components";
-import { v4 as uuidv4 } from "uuid";
 import type { ChatMessage } from "../types";
 
 type MessagesProps = {
@@ -11,10 +10,11 @@ type MessagesProps = {
 const Messages = ({ messages, scrollRef }: MessagesProps) => {
   return (
     <Container>
-      {/* Show each message */}
-      {messages?.map((message) => {
+      {messages.map((message, index) => {
+        const isLast = index === messages.length - 1;
+
         return (
-          <div ref={scrollRef} key={uuidv4()}>
+          <div ref={isLast ? scrollRef : undefined} key={message.id}>
             {/* sended - Message sent from user */}
             {/* recieved - Message recieved by user */}
             <div

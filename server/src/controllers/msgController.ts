@@ -89,6 +89,7 @@ export const getAllMessages = async (
       }
 
       return {
+        id: msg._id.toString(),
         fromSelf: msg.sender.toString() === from,
         message: decrypt(JSON.parse(encryptedText) as EncryptedMessage),
       };

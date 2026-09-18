@@ -23,52 +23,86 @@ const ChatContainer = ({
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
-  // fetch all messages
   useEffect(() => {
-    const fetchAllMessages = async () => {
-      const response = await axios.post<ChatMessage[]>(getAllMessagesRoute, {
-        from: currentUser?._id,
-        to: currentChat?._id,
-      });
+    const controller = new AbortController();
 
-      setMessages(response.data ?? []);
+    const fetchAllMessages = async () => {
+      try {
+        const response = await axios.post<ChatMessage[]>(
+          getAllMessagesRoute,
+          {
+            from: currentUser._id,
+            to: currentChat._id,
+          },
+          { signal: controller.signal }
+        );
+
+        setMessages((prev) => {
+          const history = response.data ?? [];
+          const historyIds = new Set(history.map((item) => item.id));
+          const pending = prev.filter(
+            (item) => item.fromSelf && !historyIds.has(item.id)
+          );
+          return [...history, ...pending];
+        });
+      } catch (error) {
+        if (!axios.isCancel(error) && !controller.signal.aborted) {
+          console.error(error);
+        }
+      }
     };
 
     fetchAllMessages();
-  }, [currentChat]); // eslint-disable-line
 
-  // socket.io message recieve
+    return () => controller.abort();
+  }, [currentChat._id, currentUser._id]);
+
   useEffect(() => {
-    if (socket.current) {
-      socket.current.on("msg-recieve", (msg: string) => {
-        setMessages((prev) => [...prev, { fromSelf: false, message: msg }]);
-      });
-    }
-  }, []); // eslint-disable-line
+    const currentSocket = socket.current;
+    if (!currentSocket) return;
 
-  // change scroll to latest message
+    const handleIncoming = (msg: string) => {
+      setMessages((prev) => [
+        ...prev,
+        { id: crypto.randomUUID(), fromSelf: false, message: msg },
+      ]);
+    };
+
+    currentSocket.on("msg-recieve", handleIncoming);
+    return () => {
+      currentSocket.off("msg-recieve", handleIncoming);
+    };
+  }, [socket]);
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Handle Send Messages
   const handleSendMsg = async (msg: string) => {
-    await axios.post(sendMessageRoute, {
-      from: currentUser._id,
-      to: currentChat._id,
+    const outgoing: ChatMessage = {
+      id: crypto.randomUUID(),
+      fromSelf: true,
       message: msg,
-    });
+    };
 
-    // socket.io send msg
+    setMessages((prev) => [...prev, outgoing]);
+
     socket.current?.emit("send-msg", {
       to: currentChat._id,
       from: currentUser._id,
       message: msg,
     });
 
-    const msgs = [...messages];
-    msgs.push({ fromSelf: true, message: msg });
-    setMessages(msgs);
+    try {
+      await axios.post(sendMessageRoute, {
+        from: currentUser._id,
+        to: currentChat._id,
+        message: msg,
+      });
+    } catch (error) {
+      console.error(error);
+      setMessages((prev) => prev.filter((item) => item.id !== outgoing.id));
+    }
   };
 
   return (

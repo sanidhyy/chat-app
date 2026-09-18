@@ -23,4 +23,6 @@ const msgSchema = new mongoose.Schema(
   }
 );
 
+msgSchema.index({ users: 1, updatedAt: 1 });
+
 export default mongoose.model("Messages", msgSchema);

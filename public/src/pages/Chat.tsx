@@ -14,7 +14,9 @@ const Chat = () => {
   const socket = useRef<Socket | null>(null);
   const navigate = useNavigate();
   const [contacts, setContacts] = useState<User[]>([]);
-  const currentUser = getStoredUser() ?? undefined;
+  const [currentUser] = useState<User | undefined>(
+    () => getStoredUser() ?? undefined
+  );
   const [currentChat, setCurrentChat] = useState<User | undefined>(undefined);
 
   useEffect(() => {
@@ -23,10 +25,16 @@ const Chat = () => {
 
   // Socket.io add user
   useEffect(() => {
-    if (currentUser) {
-      socket.current = io(host);
-      socket.current.emit("add-user", currentUser._id);
-    }
+    if (!currentUser) return;
+
+    const currentSocket = io(host);
+    socket.current = currentSocket;
+    currentSocket.emit("add-user", currentUser._id);
+
+    return () => {
+      currentSocket.disconnect();
+      socket.current = null;
+    };
   }, [currentUser]);
 
   // Fetch all users
@@ -66,6 +74,7 @@ const Chat = () => {
           <Welcome currentUser={currentUser} />
         ) : (
           <ChatContainer
+            key={currentChat._id}
             currentChat={currentChat}
             currentUser={currentUser}
             socket={socket}
