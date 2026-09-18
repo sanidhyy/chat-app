@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../utils/APIRoutes";
 import { getStoredUser, setStoredUser } from "../utils/storage";
 import type { AuthResponse } from "../types";
+import ServerWakeNotice from "../components/ServerWakeNotice";
 
 type LoginForm = {
   email: string;
@@ -70,7 +71,7 @@ const Login = () => {
     // Email validation
     const isInvalidEmail = (emailValue: string) => {
       const regex = new RegExp( // eslint-disable-next-line
-        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
       );
       return !emailValue || regex.test(emailValue) === false;
     };
@@ -123,6 +124,8 @@ const Login = () => {
           </span>
         </form>
       </FormContainer>
+
+      <ServerWakeNotice />
 
       {/* Toast Container */}
       <ToastContainer />

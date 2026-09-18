@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "../utils/APIRoutes";
 import { getStoredUser, setStoredUser } from "../utils/storage";
 import type { AuthResponse } from "../types";
+import ServerWakeNotice from "../components/ServerWakeNotice";
 
 type RegisterForm = {
   username: string;
@@ -171,6 +172,8 @@ const Register = () => {
           </span>
         </form>
       </FormContainer>
+
+      <ServerWakeNotice />
 
       <ToastContainer />
     </>
