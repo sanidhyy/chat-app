@@ -7,7 +7,7 @@
 [![GitHub license](https://img.shields.io/github/license/sanidhyy/chat-app)](https://github.com/sanidhyy/chat-app/blob/main/LICENSE.md)
 [![GitHub branches](https://badgen.net/github/branches/sanidhyy/chat-app/)](https://github.com/sanidhyy/chat-app/branches)
 [![Github commits](https://badgen.net/github/commits/sanidhyy/chat-app/main)](https://github.com/sanidhyy/chat-app/commits/)
-[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://snappy-chatapp.netlify.app/)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/bb03594f-bb63-4be0-bd0c-bc14fbb4ac62/deploy-status)](https://snappy-chatapp.netlify.app)
 [![GitHub issues](https://img.shields.io/github/issues/sanidhyy/chat-app)](https://github.com/sanidhyy/chat-app/issues)
 
 ## Before you start
