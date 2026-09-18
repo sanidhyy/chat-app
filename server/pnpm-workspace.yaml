@@ -1,4 +1,3 @@
 allowBuilds:
-  bcrypt: true
-  esbuild: true
-confirmModulesPurge: false
+  bcrypt: false
+  esbuild: false

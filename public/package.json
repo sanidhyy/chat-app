@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.26.0",
-  "engines": {
-    "node": ">=20.19.0"
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@multiavatar/multiavatar": "^1.0.7",
@@ -19,13 +21,6 @@
     "socket.io-client": "^4.8.3",
     "styled-components": "^6.5.3",
     "uuid": "^14.0.2"
-  },
-  "scripts": {
-    "dev": "vite",
-    "start": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "lint": "eslint ."
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
