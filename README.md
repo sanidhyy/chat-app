@@ -10,13 +10,10 @@
 [![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://snappy-chatapp.netlify.app/)
 [![GitHub issues](https://img.shields.io/github/issues/sanidhyy/chat-app)](https://github.com/sanidhyy/chat-app/issues)
 
-Realtime chat app with a Vite + React + TypeScript client and an Express + MongoDB + Socket.IO server. Avatars are generated locally with [Multiavatar](https://github.com/multiavatar/Multiavatar) (no API key).
-
 ## Before you start
 
 1. Install **Git** and **Node.js 20.19 or newer**.
-2. Install **[pnpm](https://pnpm.io/installation)** (this repo uses pnpm 11). Corepack is the easiest option: `corepack enable`.
-3. Copy the example env files and fill in real values:
+2. Copy the example env files and fill in real values:
 
 ```bash
 cp server/.env.example server/.env
@@ -25,26 +22,22 @@ cp public/.env.example public/.env
 
 ### `server/.env`
 
-| Variable | What it is | Where to get it |
-| --- | --- | --- |
-| `PORT` | Port the Express API listens on. Default `5000`. | Choose any free local port. |
-| `MONGO_URL` | MongoDB connection string. | **Local:** install [MongoDB](https://www.mongodb.com/docs/manual/installation/) and use `mongodb://127.0.0.1:27017/snappy`. **Atlas:** create a free cluster, then **Connect → Drivers** and copy the URI (replace `<password>` with a database user password). Compass is optional for browsing data. |
-| `MESSAGE_ALGORITHM` | Cipher name passed to Node `crypto.createCipheriv`. | Keep `aes-256-ctr` unless you are starting with an empty messages collection. |
-| `MESSAGE_SECRET_KEY` | 32-byte key used to encrypt chat messages at rest. | Generate with `openssl rand -hex 16` (32 hex characters). Do not reuse a short password. Changing it makes old messages unreadable. |
-| `CLIENT_URL` | Browser origin allowed by Socket.IO CORS. | In development this must match the Vite URL, `http://localhost:3000`. |
+| Variable             | What it is                                          | Where to get it                                                                                                                                                                                                                                                                                        |
+| -------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `PORT`               | Port the Express API listens on. Default `5000`.    | Choose any free local port.                                                                                                                                                                                                                                                                            |
+| `MONGO_URL`          | MongoDB connection string.                          | **Local:** install [MongoDB](https://www.mongodb.com/docs/manual/installation/) and use `mongodb://127.0.0.1:27017/snappy`. **Atlas:** create a free cluster, then **Connect → Drivers** and copy the URI (replace `<password>` with a database user password). Compass is optional for browsing data. |
+| `MESSAGE_ALGORITHM`  | Cipher name passed to Node `crypto.createCipheriv`. | Keep `aes-256-ctr` unless you are starting with an empty messages collection.                                                                                                                                                                                                                          |
+| `MESSAGE_SECRET_KEY` | 32-byte key used to encrypt chat messages at rest.  | Generate with `openssl rand -hex 16` (32 hex characters). Do not reuse a short password. Changing it makes old messages unreadable.                                                                                                                                                                    |
+| `CLIENT_URL`         | Browser origin allowed by Socket.IO CORS.           | In development this must match the Vite URL, `http://localhost:3000`.                                                                                                                                                                                                                                  |
 
 ### `public/.env`
 
 Vite only exposes variables that start with `VITE_`.
 
-| Variable | What it is | Where to get it |
-| --- | --- | --- |
-| `VITE_SERVER_URI` | Backend origin for REST and Socket.IO. | `http://localhost:5000` unless you changed `PORT`. |
+| Variable             | What it is                                      | Where to get it                                                                   |
+| -------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------- |
+| `VITE_SERVER_URI`    | Backend origin for REST and Socket.IO.          | `http://localhost:5000` unless you changed `PORT`.                                |
 | `VITE_CHAT_APP_USER` | `localStorage` key for the logged-in user JSON. | Any stable string, for example `chat-app-user`. This is not a third-party secret. |
-
-Avatars no longer need an API key. The client generates SVG avatars with `@multiavatar/multiavatar`.
-
-If the client and server cannot talk to each other, confirm `CLIENT_URL`, `VITE_SERVER_URI`, and the two ports still match.
 
 ## How to run the app
 
@@ -54,7 +47,7 @@ If the client and server cannot talk to each other, confirm `CLIENT_URL`, `VITE_
 ```bash
 cd server
 pnpm install
-pnpm start
+pnpm dev
 ```
 
 The console should print `Server started on port 5000` and `Db Connection Successful`.
@@ -66,7 +59,7 @@ The console should print `Server started on port 5000` and `Db Connection Succes
 ```bash
 cd public
 pnpm install
-pnpm start
+pnpm dev
 ```
 
 The Vite app is served at [http://localhost:3000](http://localhost:3000).
