@@ -33,8 +33,8 @@ importers:
         specifier: ^11.1.0
         version: 11.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       socket.io-client:
-        specifier: ^4.8.3
-        version: 4.8.3
+        specifier: ^4.8.4
+        version: 4.8.4
       styled-components:
         specifier: ^6.5.3
         version: 6.5.3(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -1010,8 +1010,8 @@ packages:
   shipstyles@1.0.0:
     resolution: {integrity: sha512-1AcihfXo/mSxqeOdoKqq/5TNv+vSH0dBYPFq88PUX5FBkK5pRmY5TP9SuMNio85PQ+euUI67+KpSVk1cUVDCgA==}
 
-  socket.io-client@4.8.3:
-    resolution: {integrity: sha512-uP0bpjWrjQmUt5DTHq9RuoCBdFJF10cdX9X+a368j/Ft0wmaVgxlrjvK3kjvgCODOMMOz9lcaRzxmso0bTWZ/g==}
+  socket.io-client@4.8.4:
+    resolution: {integrity: sha512-7wjKAvVXYOJsbmUgkWbnhPD4bFpkqrUR0++XOjpGFmqDqsqV1CI93VTraeExLxpjxEqrWgFoSRZu1ihjLWfkAA==}
     engines: {node: '>=10.0.0'}
 
   socket.io-parser@4.2.7:
@@ -2058,7 +2058,7 @@ snapshots:
 
   shipstyles@1.0.0: {}
 
-  socket.io-client@4.8.3:
+  socket.io-client@4.8.4:
     dependencies:
       '@socket.io/component-emitter': 3.1.2
       debug: 4.4.3
