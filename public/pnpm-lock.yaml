@@ -16,28 +16,28 @@ importers:
         version: 1.20.0(debug@4.4.3)
       emoji-picker-react:
         specifier: ^5.0.0
-        version: 5.0.0(react@19.3.0)
+        version: 5.0.0(react@19.3.1)
       react:
-        specifier: ^19.3.0
-        version: 19.3.0
+        specifier: ^19.3.1
+        version: 19.3.1
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.0(react@19.3.0)
+        version: 19.3.0(react@19.3.1)
       react-icons:
         specifier: ^5.7.0
-        version: 5.7.0(react@19.3.0)
+        version: 5.7.0(react@19.3.1)
       react-router:
         specifier: ^8.4.0
-        version: 8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        version: 8.4.0(react-dom@19.3.0(react@19.3.1))(react@19.3.1)
       react-toastify:
         specifier: ^11.1.0
-        version: 11.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        version: 11.1.0(react-dom@19.3.0(react@19.3.1))(react@19.3.1)
       socket.io-client:
         specifier: ^4.8.4
         version: 4.8.4
       styled-components:
         specifier: ^6.6.0
-        version: 6.6.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        version: 6.6.0(react-dom@19.3.0(react@19.3.1))(react@19.3.1)
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
@@ -994,8 +994,8 @@ packages:
       react: ^18 || ^19
       react-dom: ^18 || ^19
 
-  react@19.3.0:
-    resolution: {integrity: sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==}
+  react@19.3.1:
+    resolution: {integrity: sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw==}
     engines: {node: '>=0.10.0'}
 
   rolldown@1.2.12:
@@ -1652,9 +1652,9 @@ snapshots:
 
   electron-to-chromium@1.5.430: {}
 
-  emoji-picker-react@5.0.0(react@19.3.0):
+  emoji-picker-react@5.0.0(react@19.3.1):
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
       shipstyles: 1.0.0
 
   engine.io-client@6.6.6:
@@ -2025,30 +2025,30 @@ snapshots:
     dependencies:
       hookified: 2.2.0
 
-  react-dom@19.3.0(react@19.3.0):
+  react-dom@19.3.0(react@19.3.1):
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
       scheduler: 0.28.0
 
-  react-icons@5.7.0(react@19.3.0):
+  react-icons@5.7.0(react@19.3.1):
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
 
-  react-router@8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  react-router@8.4.0(react-dom@19.3.0(react@19.3.1))(react@19.3.1):
     dependencies:
       '@remix-run/route-pattern': 0.22.1
       cookie-es: 3.1.1
-      react: 19.3.0
+      react: 19.3.1
     optionalDependencies:
-      react-dom: 19.3.0(react@19.3.0)
+      react-dom: 19.3.0(react@19.3.1)
 
-  react-toastify@11.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  react-toastify@11.1.0(react-dom@19.3.0(react@19.3.1))(react@19.3.1):
     dependencies:
       clsx: 2.1.1
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.0(react@19.3.1)
 
-  react@19.3.0: {}
+  react@19.3.1: {}
 
   rolldown@1.2.12:
     dependencies:
@@ -2105,16 +2105,16 @@ snapshots:
 
   source-map-js@1.2.2: {}
 
-  styled-components@6.6.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  styled-components@6.6.0(react-dom@19.3.0(react@19.3.1))(react@19.3.1):
     dependencies:
       '@emotion/is-prop-valid': 1.4.0
       '@types/stylis': 4.2.7
       css-to-react-native: 3.2.0
       csstype: 3.2.3
-      react: 19.3.0
+      react: 19.3.1
       stylis: 4.3.6
     optionalDependencies:
-      react-dom: 19.3.0(react@19.3.0)
+      react-dom: 19.3.0(react@19.3.1)
 
   stylis@4.3.6: {}
 
